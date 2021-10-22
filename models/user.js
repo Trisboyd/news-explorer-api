@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
+    default: 'Informed Reader'
   },
   email: {
     required: true,
@@ -18,17 +19,18 @@ const userSchema = new mongoose.Schema({
       message: '{VALUE} is not a valid email',
       isAsync: false,
     },
-    password: {
-      required: true,
-      type: String,
-      select: false,
-    }
+  },
+  password: {
+    required: true,
+    type: String,
+    select: false,
   }
 })
 
 userSchema.statics.findUserByCredentials = function fundUserByCredentials(email, password) {
   return this.findOne({ email }).select('+password')
   .then((user) => {
+    console.log(user);
     if (!user) {
       return Promise.reject(new AuthError('Incorrect email or password'));
     }

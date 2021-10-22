@@ -4,7 +4,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017newsexplorerdb');
+mongoose.connect('mongodb://localhost:27017/newsexplorerdb');
 
 // ___________________________________________application
 const app = express();
@@ -19,6 +19,7 @@ const userRouter = require('./routes/user');
 const articleRouter = require('./routes/article');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const { NotFoundError } = require('./middleware/errors/notFoundError');
+const errorHandler = require('./middleware/errorHandler');
 
 // ___________________________________________PORT
 const { PORT = 3000 } = process.env;
@@ -48,6 +49,7 @@ app.get('*', () => {
 // Errors_______________________________________________________________________Errors
 app.use(errorLogger);
 
+app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log(`App is listening at port ${PORT}`);
