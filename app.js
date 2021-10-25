@@ -69,6 +69,9 @@ app.get('*', () => {
 // Errors_______________________________________________________________________Errors
 app.use(errorLogger);
 
+// error handler for sending errors to the client produced by celebrate
+app.use(errors());
+
 app.use(errorHandler);
 
 app.listen(PORT, () => {
