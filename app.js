@@ -1,8 +1,10 @@
-// VARIABLES________________________________________________________________________________VARIABLES
+// VARIABLES_____________________________________________________________VARIABLES
 
 // ___________________________________________modules
 const express = require('express');
 const mongoose = require('mongoose');
+const validator = require('validator');
+const { Joi, celebrate, errors } = require('celebrate');
 
 mongoose.connect('mongodb://localhost:27017/newsexplorerdb');
 
@@ -24,17 +26,35 @@ const errorHandler = require('./middleware/errorHandler');
 // ___________________________________________PORT
 const { PORT = 3000 } = process.env;
 
+// function for email validation
+const validateEmail = (string) => {
+  if (!validator.isEmail(string)) {
+    throw new Error('Invalid email');
+  }
+  return string;
+};
+
 // _________________________________Setup for app variable
 app.use(express.json());
 
 app.use(express.urlencoded());
 
 // ROUTES_________________________________________________________________________ROUTES
-app.use(requestLogger); //log all requests from following routes
+app.use(requestLogger); // log all requests from following routes
 
-app.post('/signup', createUser);
+app.post('/signup', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().custom(validateEmail),
+    password: Joi.string().required(),
+  }),
+}), createUser);
 
-app.post('/signin', login);
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().custom(validateEmail),
+    password: Joi.string().required(),
+  }),
+}), login);
 
 // __________________________________________Routes requiring authorization
 app.use(auth);
@@ -52,5 +72,5 @@ app.use(errorLogger);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-    console.log(`App is listening at port ${PORT}`);
+  console.log(`App is listening at port ${PORT}`);
 });
