@@ -1,6 +1,6 @@
-const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 const AuthError = require('../middleware/errors/authError');
 const NotFoundError = require('../middleware/errors/notFoundError');
 const RequestError = require('../middleware/errors/requestError');
@@ -23,23 +23,22 @@ module.exports.getCurrentUser = (req, res, next) => {
 module.exports.createUser = (req, res, next) => {
   const { email, password } = req.body;
   bcrypt.hash(password, 10)
-    .then((hash) =>
-      User.create({ email, password: hash, }))
+    .then((hash) => User.create({ email, password: hash }))
     .then((user) => {
       if (!user) {
         throw new RequestError('Invalid email or password');
       }
-      res.send({ _id: user._id, email: user.email })
+      res.send({ _id: user._id, email: user.email });
     })
     .catch(next);
-}
+};
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
       if (!user) {
-        throw new AuthError('Invalid email or password')
+        throw new AuthError('Invalid email or password');
       } else {
         const token = jwt.sign({ _id: user._id },
           NODE_ENV === 'production' ? JWT_SECRET : 'secret key', { expiresIn: '7d' });

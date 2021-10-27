@@ -5,13 +5,17 @@ const ForbiddenError = require('../middleware/errors/forbiddenError');
 
 module.exports.getArticles = (req, res, next) => {
   Article.find({})
-    .then((articles) => res.send({articles}))
+    .then((articles) => res.send({ articles }))
     .catch(next);
 };
 
 module.exports.createArticle = (req, res, next) => {
-  const { keyword, title, text, date, source, link, image } = req.body;
-  Article.create({ keyword, title, text, date, source, link, image, owner: req.user._id})
+  const {
+    keyword, title, text, date, source, link, image,
+  } = req.body;
+  Article.create({
+    keyword, title, text, date, source, link, image, owner: req.user._id,
+  })
     .then((article) => {
       if (!article) {
         throw new RequestError('Invalid article information');
@@ -19,7 +23,7 @@ module.exports.createArticle = (req, res, next) => {
       res.send({ article });
     })
     .catch(next);
-}
+};
 
 module.exports.deleteArticle = (req, res, next) => {
   Article.findById(req.params.cardId)

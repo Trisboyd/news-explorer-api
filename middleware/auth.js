@@ -5,8 +5,9 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 const handleAuthError = () => {
   throw new AuthError('Authorization Error');
-}
+};
 
+// eslint-disable-next-line consistent-return
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
@@ -18,13 +19,13 @@ const auth = (req, res, next) => {
 
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key');
-  } catch(err) {
+  } catch (err) {
     return handleAuthError();
   }
 
   req.user = payload;
 
   next();
-}
+};
 
 module.exports = auth;
