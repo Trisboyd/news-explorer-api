@@ -1,15 +1,12 @@
-const express = require('express');
 const { Joi, celebrate } = require('celebrate');
 const validator = require('validator');
-
+const router = require('express').Router();
 const auth = require('../middleware/auth');
 const { login, createUser } = require('../controllers/user');
 const userRouter = require('./user');
 const articleRouter = require('./article');
 const { NotFoundError } = require('../middleware/errors/notFoundError');
 const { requestLogger } = require('../middleware/logger');
-
-const app = express();
 
 // ________________________function for email validation
 const validateEmail = (string) => {
@@ -20,16 +17,16 @@ const validateEmail = (string) => {
 };
 
 // ROUTES_________________________________________________________________________ROUTES
-app.use(requestLogger); // log all requests from following routes
+router.use(requestLogger); // log all requests from following routes
 
-app.post('/signup', celebrate({
+router.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().custom(validateEmail),
     password: Joi.string().required(),
   }),
 }), createUser);
 
-app.post('/signin', celebrate({
+router.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().custom(validateEmail),
     password: Joi.string().required(),
@@ -37,13 +34,13 @@ app.post('/signin', celebrate({
 }), login);
 
 // __________________________________________Routes requiring authorization
-app.use(auth);
+router.use(auth);
 
-app.use(userRouter);
-app.use(articleRouter);
+router.use(userRouter);
+router.use(articleRouter);
 
-app.get('*', () => {
+router.get('*', () => {
   throw new NotFoundError('Requested resource not found');
 });
 
-module.exports =
+module.exports = router;
