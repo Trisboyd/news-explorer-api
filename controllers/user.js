@@ -21,9 +21,9 @@ module.exports.getCurrentUser = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   bcrypt.hash(password, 10)
-    .then((hash) => User.create({ email, password: hash }))
+    .then((hash) => User.create({ name, email, password: hash }))
     .then((user) => {
       if (!user) {
         throw new RequestError('Invalid email or password');
@@ -41,7 +41,7 @@ module.exports.login = (req, res, next) => {
         throw new AuthError('Invalid email or password');
       } else {
         const token = jwt.sign({ _id: user._id },
-          NODE_ENV === 'production' ? JWT_SECRET : 'secret key', { expiresIn: '7d' });
+          NODE_ENV === 'production' ? JWT_SECRET : 'secret-key', { expiresIn: '7d' });
         res.send({ token });
       }
     })

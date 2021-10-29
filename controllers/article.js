@@ -26,13 +26,13 @@ module.exports.createArticle = (req, res, next) => {
 };
 
 module.exports.deleteArticle = (req, res, next) => {
-  Article.findById(req.params.cardId)
+  Article.findById(req.params.articleId)
     .then((article) => {
       if (article.owner.toString() === req.user._id) {
-        article.findByIdAndRemove(req.params.cardId)
-          .orFail(() => { throw new NotFoundError('Card does not exist'); })
-          .then((cards) => res.send({ data: cards }))
+        Article.findByIdAndRemove(req.params.articleId)
+          .orFail(() => { throw new NotFoundError('Article does not exist'); })
+          .then((articles) => res.send({ data: articles }))
           .catch(next);
-      } else throw ForbiddenError('Only card owners may delete their cards');
+      } else throw ForbiddenError('Only article owners may delete their articles');
     });
 };

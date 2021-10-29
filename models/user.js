@@ -5,10 +5,10 @@ const AuthError = require('../middleware/errors/authError');
 
 const userSchema = new mongoose.Schema({
   name: {
+    required: true,
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: 'Informed Reader',
   },
   email: {
     required: true,
