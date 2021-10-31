@@ -4,7 +4,7 @@
 This code comprises the backend portion of an app that allows users to create personalized pages where
 news articles can be saved and accessed at the user's pleasure.
 
-https://boyd-news-explorer.herokuapp.com/
+https://api/boyd-news-explorer.herokuapp.com/
 
 ## technologies
 -Node.js
