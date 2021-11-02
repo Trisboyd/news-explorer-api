@@ -5,7 +5,8 @@ const auth = require('../middleware/auth');
 const { login, createUser } = require('../controllers/user');
 const userRouter = require('./user');
 const articleRouter = require('./article');
-const { NotFoundError } = require('../middleware/errors/notFoundError');
+const NotFoundError = require('../middleware/errors/notFoundError');
+const { notFound } = require('../utilities/errorMessages');
 const { requestLogger } = require('../middleware/logger');
 
 // ________________________function for email validation
@@ -23,6 +24,7 @@ router.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().custom(validateEmail),
     password: Joi.string().required(),
+    name: Joi.string().required(),
   }),
 }), createUser);
 
@@ -40,7 +42,7 @@ router.use(userRouter);
 router.use(articleRouter);
 
 router.get('*', () => {
-  throw new NotFoundError('Requested resource not found');
+  throw new NotFoundError(notFound);
 });
 
 module.exports = router;

@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken');
 const AuthError = require('./errors/authError');
+const authError = require('../utilities/errorMessages');
+
 // ___________________________________________access secret key in environment variable
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const handleAuthError = () => {
-  throw new AuthError('Authorization Error');
+  throw new AuthError(authError);
 };
 
 // eslint-disable-next-line consistent-return

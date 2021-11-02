@@ -11,10 +11,10 @@ const mainRouter = require('./routes/index');
 require('dotenv').config();
 
 // __________________________collect environment variable for production and database
-const { NODE_ENV, DATABASE } = process.env;
+const { DATABASE } = process.env;
 
 // ______________________________________________________connect to database
-mongoose.connect(NODE_ENV === 'production' ? DATABASE : 'mongodb://localhost:27017/newsexplorerdb');
+mongoose.connect(DATABASE);
 
 // ___________________________________________application
 const app = express();
@@ -37,11 +37,12 @@ app.use(express.urlencoded());
 
 app.use(helmet());
 
-app.use(limiter);
-
 // ROUTES_________________________________________________________________________ROUTES
 
 app.use('/', mainRouter);
+
+// ________________________________limit amount of server requests to prevent overload
+app.use(limiter);
 
 // Errors_______________________________________________________________________Errors
 app.use(errorLogger);
