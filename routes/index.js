@@ -6,7 +6,7 @@ const { login, createUser } = require('../controllers/user');
 const userRouter = require('./user');
 const articleRouter = require('./article');
 const NotFoundError = require('../middleware/errors/notFoundError');
-const { notFound } = require('../utilities/errorMessages');
+const notFound = require('../utilities/errorMessages/notFound');
 const { requestLogger } = require('../middleware/logger');
 
 // ________________________function for email validation
