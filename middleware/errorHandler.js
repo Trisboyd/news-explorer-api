@@ -1,4 +1,5 @@
-const { emailExists, server } = require('../utilities/errorMessages');
+const emailExists = require('../utilities/errorMessages/emailExists');
+const server = require('../utilities/errorMessages/server');
 
 const errorHandler = (error, req, res, next) => {
   console.log(error);

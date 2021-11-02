@@ -2,7 +2,9 @@ const Article = require('../models/article');
 const RequestError = require('../middleware/errors/requestError');
 const NotFoundError = require('../middleware/errors/notFoundError');
 const ForbiddenError = require('../middleware/errors/forbiddenError');
-const { invalidArticleInfo, notFound, owner } = require('../utilities/errorMessages');
+const invalidArticleInfo = require('../utilities/errorMessages/invalidArticleInfo');
+const notFound = require('../utilities/errorMessages/notFound');
+const owner = require('../utilities/errorMessages/owner');
 
 module.exports.getArticles = (req, res, next) => {
   Article.find({})

@@ -4,7 +4,8 @@ const User = require('../models/user');
 const AuthError = require('../middleware/errors/authError');
 const NotFoundError = require('../middleware/errors/notFoundError');
 const RequestError = require('../middleware/errors/requestError');
-const { noUser, invalid } = require('../utilities/errorMessages');
+const noUser = require('../utilities/errorMessages/noUser');
+const invalid = require('../utilities/errorMessages/invalid');
 
 // ____________________________________________access secret key in environment variable
 const { NODE_ENV, JWT_SECRET } = process.env;
