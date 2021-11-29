@@ -3,6 +3,7 @@
 // ___________________________________________modules
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 const mainRouter = require('./routes/index');
@@ -36,6 +37,10 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 app.use(helmet());
+
+// ___________________________________________CORS
+app.use(cors());
+app.options('*', cors());
 
 // ROUTES_________________________________________________________________________ROUTES
 
