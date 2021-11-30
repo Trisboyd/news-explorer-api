@@ -17,10 +17,10 @@ require('dotenv').config();
 // const { DATABASE } = process.env;
 
 // this variable for HEROKU
-const { MONGO_URI } = process.env;
+const { MONGODB_URI } = process.env;
 
 // ______________________________________________________connect to database
-mongoose.connect(MONGO_URI);
+mongoose.connect(MONGODB_URI);
 
 // ___________________________________________application
 const app = express();
