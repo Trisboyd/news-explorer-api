@@ -7,7 +7,7 @@ const errorHandler = (error, req, res, next) => {
     res.status(409).send({ message: emailExists });
   }
   res.status(error.statusCode)
-    .send({ message: (error.statusCode === 500) ? server : 'poop' });
+    .send({ message: (error.statusCode === 500) ? server : error.message });
   next();
 };
 
