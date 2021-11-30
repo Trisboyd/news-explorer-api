@@ -34,7 +34,7 @@ app.set('trust proxy', 1); // for proxy service Heroku
 // ____________________________________________________Setup for app variable
 app.use(express.json());
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(helmet());
 
