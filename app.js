@@ -12,10 +12,15 @@ const mainRouter = require('./routes/index');
 require('dotenv').config();
 
 // __________________________collect environment variable for production and database
-const { DATABASE } = process.env;
+
+// this variable works for google cloud
+// const { DATABASE } = process.env;
+
+// this variable for HEROKU
+const { MONGO_URI } = process.env;
 
 // ______________________________________________________connect to database
-mongoose.connect(DATABASE);
+mongoose.connect(MONGO_URI);
 
 // ___________________________________________application
 const app = express();
