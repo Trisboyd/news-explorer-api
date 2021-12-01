@@ -20,7 +20,7 @@ require('dotenv').config();
 const { MONGODB_URI } = process.env;
 
 // ______________________________________________________connect to database
-mongoose.connect(MONGODB_URI);
+mongoose.connect('mongodb+srv://Trisboyd:ju257ly7@newsuserinfo.mwocs.mongodb.net/NewsUserInfo?retryWrites=true&w=majority');
 
 // ___________________________________________application
 const app = express();
