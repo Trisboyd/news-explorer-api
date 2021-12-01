@@ -43,7 +43,7 @@ module.exports.login = (req, res, next) => {
         throw new AuthError(invalid);
       } else {
         const token = jwt.sign({ _id: user._id },
-          NODE_ENV === 'production' ? JWT_SECRET : 'secret-key', { expiresIn: '7d' });
+          NODE_ENV === 'production' ? 'efcce106cf21d56d3a910257a0649b71e2e240f8e63cd8599586044fcab81eac' : 'secret-key', { expiresIn: '7d' });
         res.send({ token });
       }
     })
